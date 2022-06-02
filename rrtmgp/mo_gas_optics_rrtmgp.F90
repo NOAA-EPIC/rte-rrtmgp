@@ -21,6 +21,10 @@
 !
 ! -------------------------------------------------------------------------------------------------
 module mo_gas_optics_rrtmgp
+
+!! \section arg_table_mo_gas_optics_rrtmgp Argument Table
+!! \htmlinclude mo_gas_optics.html
+!!
   use mo_rte_kind,           only: wp, wl
   use mo_rte_config,         only: check_extents, check_values
   use mo_rte_util_array,     only: zero_array, any_vals_less_than, any_vals_outside, extents_are
@@ -39,6 +43,9 @@ module mo_gas_optics_rrtmgp
   real(wp), parameter :: pi = acos(-1._wp)
 
   ! -------------------------------------------------------------------------------------------------
+!! \section arg_table_ty_gas_optics_rrtmgp Argument Table
+!! \htmlinclude ty_gas_optics_rrtmgp.html
+!!
   type, extends(ty_gas_optics), public :: ty_gas_optics_rrtmgp
     private
     !
@@ -178,7 +185,7 @@ module mo_gas_optics_rrtmgp
     procedure, private :: get_npres
     procedure, private :: get_ntemp
     procedure, private :: get_nPlanckTemp
-  end type
+  end type ty_gas_optics_rrtmgp
   ! -------------------------------------------------------------------------------------------------
   !
   ! col_dry is the number of molecules per cm-2 of dry air

@@ -39,6 +39,11 @@
 !
 ! -------------------------------------------------------------------------------------------------
 module mo_optical_props
+
+!! \section arg_table_mo_optical_props Argument Table
+!! \htmlinclude mo_optical_props.html
+!!
+
   use mo_rte_kind,              only: wp
   use mo_rte_config,            only: check_extents, check_values
   use mo_rte_util_array,        only: any_vals_less_than, any_vals_outside, extents_are
@@ -86,7 +91,7 @@ module mo_optical_props
     procedure, public  :: expand
     procedure, public  :: set_name
     procedure, public  :: get_name
-  end type
+  end type ty_optical_props
   !----------------------------------------------------------------------------------------
   !
   ! Optical properties as arrays, normally dimensioned ncol, nlay, ngpt/nbnd
@@ -112,7 +117,7 @@ module mo_optical_props
     procedure(validate_abstract),     deferred, public  :: validate
     procedure(delta_scale_abstract),  deferred, public  :: delta_scale
     procedure(subset_range_abstract), deferred, public  :: get_subset
-  end type
+  end type ty_optical_props_arry
   !
   ! Interfaces for the methods to be implemented
   !
@@ -159,7 +164,12 @@ module mo_optical_props
   !     phase function moments (index 1 = g) for use with discrete ordinate methods
   !
   ! -------------------------------------------------------------------------------------------------
+
+!! \section arg_table_ty_optical_props_1scl Argument Table
+!! \htmlinclude ty_optical_props_1scl.html
+!!
   type, public, extends(ty_optical_props_arry) :: ty_optical_props_1scl
+
   contains
     procedure, public  :: validate => validate_1scalar
     procedure, public  :: get_subset => subset_1scl_range
@@ -170,9 +180,12 @@ module mo_optical_props
     procedure, private :: init_and_alloc_1scl
     procedure, private :: copy_and_alloc_1scl
     generic,   public  :: alloc_1scl => alloc_only_1scl, init_and_alloc_1scl, copy_and_alloc_1scl
-  end type
+  end type ty_optical_props_1scl
 
   ! --- 2 stream ------------------------------------------------------------------------
+!! \section arg_table_ty_optical_props_2str Argument Table
+!! \htmlinclude ty_optical_props_2str.html
+!!
   type, public, extends(ty_optical_props_arry) :: ty_optical_props_2str
     real(wp), dimension(:,:,:), allocatable :: ssa ! single-scattering albedo (ncol, nlay, ngpt)
     real(wp), dimension(:,:,:), allocatable :: g   ! asymmetry parameter (ncol, nlay, ngpt)
@@ -186,9 +199,12 @@ module mo_optical_props
     procedure, private :: init_and_alloc_2str
     procedure, private :: copy_and_alloc_2str
     generic,   public  :: alloc_2str => alloc_only_2str, init_and_alloc_2str, copy_and_alloc_2str
-  end type
+  end type ty_optical_props_2str
 
   ! --- n stream ------------------------------------------------------------------------
+!! \section arg_table_ty_optical_props_nstr Argument Table
+!! \htmlinclude ty_optical_props_nstr.html
+!!
   type, public, extends(ty_optical_props_arry) :: ty_optical_props_nstr
     real(wp), dimension(:,:,:),   allocatable :: ssa ! single-scattering albedo (ncol, nlay, ngpt)
     real(wp), dimension(:,:,:,:), allocatable :: p   ! phase-function moments (nmom, ncol, nlay, ngpt)
@@ -203,7 +219,7 @@ module mo_optical_props
     procedure, private :: init_and_alloc_nstr
     procedure, private :: copy_and_alloc_nstr
     generic,   public  :: alloc_nstr => alloc_only_nstr, init_and_alloc_nstr, copy_and_alloc_nstr
-  end type
+  end type ty_optical_props_nstr
   ! -------------------------------------------------------------------------------------------------
 contains
   ! -------------------------------------------------------------------------------------------------
